@@ -5,6 +5,7 @@
     "name": "testcourseapp",
     "slug": "testcourseapp",
     "version": "1.0.0",
+    "scheme": "testcourse",
     "assetBundlePatterns": [
       "**/*"
     ]
