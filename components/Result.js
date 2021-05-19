@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
 import React,{useState,useEffect} from 'react';
-import { StyleSheet, Text, View , Dimensions} from 'react-native';
-import { ActivityIndicator, Colors,TextInput,Button, Divider } from 'react-native-paper';
+import { StyleSheet, Text, View , Dimensions,ScrollView} from 'react-native';
+import { ActivityIndicator, Colors,TextInput,Button,RadioButton,Checkbox} from 'react-native-paper';
 import * as WebBrowser from 'expo-web-browser';
 import { PieChart } from 'react-native-svg-charts'
 import { Circle, G, Line, Text as SVGText } from 'react-native-svg'
+import AutoHeightWebView from 'react-native-autoheight-webview'
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -16,7 +17,8 @@ export default function Result({route,navigation}) {
   var server = 'http://localhost:8080'
   const { id } = route.params;
   const [load,setLoad] = useState(true)
-  const [labelWidth,setlabelWidth] = useState(0)
+  const [loadques,setLoadques] = useState(true);
+  const [quesarr,setQuesarr] = useState([]);
   const [data,setData] = useState({});
   const [piedata,setPieData] = useState([]);
   const [sec,setSec] = useState({});
@@ -24,7 +26,8 @@ export default function Result({route,navigation}) {
 
 
   useEffect(()=>{
-    initial()
+    initial();
+    initial2();
   },[])
 
   const initial = async()=>{
@@ -36,6 +39,19 @@ export default function Result({route,navigation}) {
     setData(a)
     setSec(a.sections[0])
     datafun(a)
+  }
+  const initial2 = ()=>{
+    fetch(`${server}/Testserver/result/questions`, {method: 'POST',headers: {
+        'Content-Type': 'application/json'}, body: JSON.stringify({testid:id})})
+        .then(res => {
+            // console.log(res.status)
+            if(res.status === 200){
+                res.json().then((res)=>{
+                    setQuesarr(res.quesarr);
+                    setLoadques(false);
+                })
+            }
+        })
   }
 
   const datafun = (data)=>{
@@ -119,6 +135,186 @@ export default function Result({route,navigation}) {
     )
   }
 
+
+  const qtype = (ques,quesdet)=>{
+    // console.log(quesdet)
+    // console.log(ques)
+    if(ques.question_type === 'SCQ'){
+      var op1 = ques.option_1._id || 'op1';
+      var op2 = ques.option_2._id || 'op2';
+      var op3 = ques.option_3._id || 'op3';
+      var op4 = ques.option_4._id || 'op4';
+      var a = {
+          [op1]:'unchecked',
+          [op2]:'unchecked',
+          [op3]:'unchecked',
+          [op4]:'unchecked'
+      }
+      var b = {
+        [op1]:'unchecked',
+        [op2]:'unchecked',
+        [op3]:'unchecked',
+        [op4]:'unchecked'
+    }
+      var i = 0;
+      for(i=0;i<ques.answer.length;i++) b[ques.answer[i]] = 'checked';
+      for(i=0;i<quesdet.user_response.length;i++) a[quesdet.user_response[i]] = 'checked';
+        return (
+          <View>
+              <View style={{width}}>
+                  <AutoHeightWebView originWhitelist={['*']} style={{margin:5,padding:5}} source={{ html: ques.question,baseUrl:server }} scalesPageToFit={false} />
+                  <View>
+                    <Text style={{color:'black'}} >
+                        Total Marks : {quesdet.marks_correct}  Your Score : {quesdet.user_score}
+                    </Text>
+                  </View>
+                  {ques.option_1.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <RadioButton value={ques.option_1._id} style={{}} status={b[ques.option_1._id]} disabled />
+                              <RadioButton value={ques.option_1._id} status={a[ques.option_1._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_1.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_2.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <RadioButton value={ques.option_2._id} style={{}} status={b[ques.option_2._id]} disabled />
+                              <RadioButton value={ques.option_2._id} status={a[ques.option_2._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_2.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_3.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <RadioButton value={ques.option_3._id} style={{}} status={b[ques.option_3._id]} disabled />
+                              <RadioButton value={ques.option_3._id} status={a[ques.option_3._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_3.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_4.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <RadioButton value={ques.option_4._id} style={{}} status={b[ques.option_4._id]} disabled />
+                              <RadioButton value={ques.option_4._id} status={a[ques.option_4._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_4.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+              </View>
+          </View>
+        )
+    }else if(ques.question_type === 'MCQ'){
+      var op1 = ques.option_1._id || 'op1';
+      var op2 = ques.option_2._id || 'op2';
+      var op3 = ques.option_3._id || 'op3';
+      var op4 = ques.option_4._id || 'op4';
+      var a = {
+          [op1]:'unchecked',
+          [op2]:'unchecked',
+          [op3]:'unchecked',
+          [op4]:'unchecked'
+      }
+      var b = {
+        [op1]:'unchecked',
+        [op2]:'unchecked',
+        [op3]:'unchecked',
+        [op4]:'unchecked'
+    }
+      var i = 0;
+      for(i=0;i<ques.answer.length;i++) b[ques.answer[i]] = 'checked';
+      for(i=0;i<quesdet.user_response.length;i++) a[quesdet.user_response[i]] = 'checked';
+        return (
+          <View>
+              <View style={{width}}>
+                  <AutoHeightWebView originWhitelist={['*']} style={{margin:5,padding:5}} source={{ html: ques.question,baseUrl:server }} scalesPageToFit={false} />
+                  <View>
+                    <Text style={{color:'black'}} >
+                        Total Marks : {quesdet.marks_correct}  Your Score : {quesdet.user_score}
+                    </Text>
+                  </View>
+                  {ques.option_1.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <Checkbox value={ques.option_1._id} style={{}} status={b[ques.option_1._id]} disabled />
+                              <Checkbox value={ques.option_1._id} status={a[ques.option_1._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_1.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_2.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <Checkbox value={ques.option_2._id} style={{}} status={b[ques.option_2._id]} disabled />
+                              <Checkbox value={ques.option_2._id} status={a[ques.option_2._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_2.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_3.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <Checkbox value={ques.option_3._id} style={{}} status={b[ques.option_3._id]} disabled />
+                              <Checkbox value={ques.option_3._id} status={a[ques.option_3._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_3.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+                  {ques.option_4.valid?
+                      <View style={{display:'flex',flexDirection:'row',marginVertical:10}}>
+                          <View style={{display:'flex',flexDirection:'row'}}>
+                              <Checkbox value={ques.option_4._id} style={{}} status={b[ques.option_4._id]} disabled />
+                              <Checkbox value={ques.option_4._id} status={a[ques.option_4._id]} disabled />
+                          </View>
+                          <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.option_4.content,baseUrl:server }} scalesPageToFit={false} />
+                      </View>:<></>
+                  }
+              </View>
+          </View>
+        )          
+    }else if(ques.question_type === 'Fill'){
+        var b = ques.answer.length>0?ques.answer[0]:"";
+        var a = quesdet.user_response[0];
+      return (
+          <View style={classes.sec7}>
+              <View style={{margin:10}}>
+                  <AutoHeightWebView originWhitelist={['*']} source={{ html: ques.question,baseUrl:server }} scalesPageToFit={false} />
+                  <View>
+                    <Text style={{color:'black'}} >
+                        Total Marks : {quesdet.marks_correct}  Your Score : {quesdet.user_score}
+                    </Text>
+                  </View>
+                  <View style={{margin:5,padding:5}}>
+                    <TextInput  style={{margin:5,padding:5,borderColor:'green'}} disabled type="username" required label="Correct Answer" name="username" variant="outlined" size="small" autoFocus  value={b} />
+                    <TextInput  style={{margin:5,padding:5}} disabled type="username" required label="Your Answer" name="username" variant="outlined" size="small" autoFocus  value={a} />
+                  </View>
+              </View>
+          </View>
+        )          
+    }
+  }
+
+  const qdis = ()=>{
+      var i;
+      var a = [];
+      for(i=sec.startindex;i<=sec.endindex;i++){
+          var ques = quesarr[i].ques;
+          // console.log(quesarr[i])
+          var b = 
+              <View key={i} style={classes.ques}>
+                  {qtype(ques,quesarr[i])}
+              </View>
+
+          a.push(b)
+          
+      }
+
+      return a
+  }
+
   return (
     load?
     <View style={classes.container}>
@@ -127,7 +323,7 @@ export default function Result({route,navigation}) {
       </Text>
     </View>:
     
-    <View style={classes.container}>
+    <ScrollView style={classes.container}>
       <View style= {classes.mainform}>
           <View style={classes.header}>
             <Text style={{fontSize:40,}} >
@@ -202,7 +398,18 @@ export default function Result({route,navigation}) {
             </View>
         </View>
       </View>
-    </View>
+      {
+            loadques?
+            <View>
+              <Text>
+                Loading...
+              </Text>
+            </View>:
+            <View style={classes.quesdiv} >
+                {qdis()}
+            </View>
+          }
+    </ScrollView>
 
   );
 }
@@ -212,6 +419,7 @@ const classes = StyleSheet.create({
     // flex:1,
     // alignItems: 'center',
     // justifyContent: 'center',
+    height
   },
   mainform:{
     width:width,
@@ -254,5 +462,12 @@ const classes = StyleSheet.create({
       flexDirection:'row',
       justifyContent:'center',
       padding:20
+  },
+  quesdiv:{
+      width:width,
+      display:'flex',
+      // alignItems:'stretch',
+      marginVertical:20,
+      flexDirection:'column'
   }
 });

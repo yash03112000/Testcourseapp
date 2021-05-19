@@ -44,7 +44,7 @@ const classes = StyleSheet.create({
         marginBottom:10     
     },
     sec7:{
-        overflow:'scroll',
+        // overflow:'scroll',
         height:0.45*height
     }
 });
