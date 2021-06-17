@@ -16,10 +16,10 @@ import {
   RadioButton,
 } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSectionact } from '../redux/SectionReducer';
-import { setResultact } from '../redux/ResultReducer';
-import { setQuesidact } from '../redux/QuesidReducer';
-import { setModalact } from '../redux/ModalReducer';
+import { setSectionact } from '../../redux/SectionReducer';
+import { setResultact } from '../../redux/ResultReducer';
+import { setQuesidact } from '../../redux/QuesidReducer';
+import { setModalact } from '../../redux/ModalReducer';
 import Constants from 'expo-constants';
 
 const { manifest } = Constants;
@@ -58,7 +58,7 @@ export default function SwipeableTemporaryDrawer({ navigation }) {
       <View style={classes.maindivright}>
         <View style={classes.rightsec1}>
           <Image
-            source={require('../assets/malefig.jpg')}
+            source={require('../../assets/malefig.jpg')}
             style={{
               width: '50%',
               height: 100,

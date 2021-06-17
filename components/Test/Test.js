@@ -11,14 +11,14 @@ import {
   Provider,
 } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSectionact } from '../redux/SectionReducer';
-import { setResultact } from '../redux/ResultReducer';
-import { setQuesidact } from '../redux/QuesidReducer';
-import { setDataact } from '../redux/DataReducer';
-import { setQuesarract } from '../redux/QuesarrayReducer';
+import { setSectionact } from '../../redux/SectionReducer';
+import { setResultact } from '../../redux/ResultReducer';
+import { setQuesidact } from '../../redux/QuesidReducer';
+import { setDataact } from '../../redux/DataReducer';
+import { setQuesarract } from '../../redux/QuesarrayReducer';
 import Question from './Question';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { setModalact } from '../redux/ModalReducer';
+import { setModalact } from '../../redux/ModalReducer';
 import Constants from 'expo-constants';
 
 const { manifest } = Constants;
@@ -27,8 +27,6 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function Test({ route, navigation }) {
-  //   var server = 'http://localhost:8080'
-  //   var server = 'http://localhost:8080'
   if (Platform.OS === 'web') {
     server = 'http://localhost:8080';
   } else {

@@ -10,12 +10,11 @@ import {
   Checkbox,
 } from 'react-native-paper';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSectionact } from '../redux/SectionReducer';
-import { setResultact } from '../redux/ResultReducer';
-import { setQuesidact } from '../redux/QuesidReducer';
-import { setDataact } from '../redux/DataReducer';
-import { setQuesarract } from '../redux/QuesarrayReducer';
-import { WebView } from 'react-native-webview';
+import { setSectionact } from '../../redux/SectionReducer';
+import { setResultact } from '../../redux/ResultReducer';
+import { setQuesidact } from '../../redux/QuesidReducer';
+import { setDataact } from '../../redux/DataReducer';
+import { setQuesarract } from '../../redux/QuesarrayReducer';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import { Picker } from '@react-native-picker/picker';
 import Constants from 'expo-constants';
