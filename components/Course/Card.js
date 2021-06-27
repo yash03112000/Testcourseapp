@@ -59,7 +59,7 @@ export default function Card({ data, route, navigation }) {
           setLoad(false);
         });
       } else if (res.status == 403) {
-        router.replace('/LogIn');
+        navigation.replace('/LogIn');
       }
     });
   };
@@ -69,29 +69,31 @@ export default function Card({ data, route, navigation }) {
     navigation.replace('Payment', { testid: id });
   };
 
+  const register = (e) => {
+    e.preventDefault();
+    fetch(`${server}/payment/course/registerfree`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ id }),
+    }).then((res) => {
+      // console.log(res.status)
+      if (res.status === 200) {
+        res.json().then((res) => {
+          // router.reload();
+          setStatus(true);
+        });
+      } else if (res.status == 403) {
+        navigation.replace('/LogIn');
+      }
+    });
+  };
+
   const botfun = (test) => {
     if (status) {
       return (
         <>
-          <View style={classes.row}>
-            <Text
-              component="p"
-              color="primary"
-              variant="subtitle1"
-              gutterBottom
-              style={classes.pricetext}
-            >
-              <Text
-                style={{
-                  // textDecoration: 'line-through',
-                  // color: 'grey',
-                  fontWeight: 'bold',
-                }}
-              >
-                FREE
-              </Text>
-            </Text>
-          </View>
           <View style={classes.rest}>
             <Button
               style={{
@@ -144,7 +146,7 @@ export default function Card({ data, route, navigation }) {
                   margin: 10,
                   // border: '0.2px solid black',
                 }}
-                onPress={pay}
+                onPress={register}
               >
                 Buy Now
               </Button>
