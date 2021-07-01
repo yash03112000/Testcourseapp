@@ -1,5 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
+import { unstable_batchedUpdates as unstable } from 'react-dom';
 import { StyleSheet, Text, View, Dimensions, ScrollView } from 'react-native';
 import {
   ActivityIndicator,
@@ -91,13 +92,17 @@ export default function Question({ test }) {
     var i = 0;
     // console.log('quesid')
 
-    for (i = 0; i < result.user_response.length; i++) {
-      if (result.user_response[i]._id === id) {
-        if (i !== section.endindex) {
-          if (next) setQuesid(result.user_response[i + 1]._id);
-          setResult(result);
+    for (i = 0; i < section.questions.length; i++) {
+      if (section.questions[i]._id === id) {
+        if (i !== section.questions.length - 1) {
+          unstable(() => {
+            if (next) setQuesid(section.questions[i + 1]._id);
+            setResult(result);
+          });
         } else {
-          setResult(result);
+          unstable(() => {
+            setResult(result);
+          });
         }
       }
     }
@@ -118,12 +123,12 @@ export default function Question({ test }) {
             headers: {
               'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ id, test }),
+            body: JSON.stringify({ id, test, secid: section._id }),
           }).then((res) => {
             // console.log(res.status)
             if (res.status === 200) {
               res.json().then((res) => {
-                // console.log(res)
+                // console.log(res);
                 data[i].content.quesbody = res.quesbody;
                 data[i].content.response = res.ques.response;
                 data[i].done = true;
@@ -141,8 +146,8 @@ export default function Question({ test }) {
 
   const qnum = (id) => {
     var i = 0;
-    for (i = 0; i < result.user_response.length; i++) {
-      if (result.user_response[i]._id === id) {
+    for (i = 0; i < section.questions.length; i++) {
+      if (section.questions[i]._id === id) {
         return i + 1;
       }
     }
@@ -154,7 +159,7 @@ export default function Question({ test }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, test, answer }),
+      body: JSON.stringify({ id, test, answer, secid: section._id }),
     }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
@@ -177,7 +182,7 @@ export default function Question({ test }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, test }),
+      body: JSON.stringify({ id, test, secid: section._id }),
     }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
@@ -202,7 +207,7 @@ export default function Question({ test }) {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ id, test, answer }),
+      body: JSON.stringify({ id, test, answer, secid: section._id }),
     }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {

@@ -59,47 +59,47 @@ export default function Test({ route, navigation }) {
   }, []);
 
   const initial = async () => {
+    // console.log(server);
     var res = await fetch(`${server}/Testserver/${id}`, { method: 'GET' });
-    var data = await res.json();
-    var test = data.test;
-    var result = data.result;
-    var arr = [];
+    if (res.status == 403) {
+      navigation.replace('LogIn');
+    }
+    if (res.status === 200) {
+      var data = await res.json();
+      console.log(data);
+      var test = data.test;
+      var result = data.result;
+      var arr = [];
 
-    result.user_response.map((res, i) => {
-      var a = {};
-      a['done'] = false;
-      a['_id'] = res._id;
-      a['content'] = {};
-      // a['response'] = []
-      arr.push(a);
-    });
-    // console.log(arr)
-    setData(test);
-    setResult(result);
-    setQuesarr(arr);
-    setSection(test.section_id[0]);
-    setQuesid(test.question_id[test.section_id[0].startindex]);
-    setLoad(false);
+      result.sections.map((sec, i) => {
+        sec.questions.map((ques) => {
+          var a = {};
+          a['done'] = false;
+          a['_id'] = ques._id;
+          a['content'] = {};
+          arr.push(a);
+        });
+      });
+
+      // console.log(arr)
+      setData(test);
+      setResult(result);
+      setQuesarr(arr);
+      setSection(test.section_id[0]);
+      setQuesid(test.section_id[0].questions[0]._id);
+      setLoad(false);
+    }
   };
-  //   const changeqid= (id)=>{
-  //         console.log('quesid')
-  //         if(quesid!==id) setQuesid(id);
-  //     }
+
   const secChange = (curr) => {
     // console.log('quesid')
 
     if (curr.title !== section.title) {
       setSection(curr);
-      setQuesid(data.question_id[curr.startindex]);
+      setQuesid(curr.questions[0]._id);
     }
   };
 
-  // const changequesarr = (data)=>{
-  //     setQuesarr(data)
-  // }
-  // const changeModal = ()=>{
-  //     setModal(true)
-  // }
   const submitTest = () => {
     navigation.closeDrawer();
     fetch(`${server}/Testserver/submit`, {
@@ -114,7 +114,7 @@ export default function Test({ route, navigation }) {
         res.json().then((res) => {
           if (res.status === 200) {
             // router.replace(`/result/${testid}`)
-            navigation.replace('Result', { id: '608470b2649f1c577703ea58' });
+            navigation.replace('Result', { id });
           }
         });
       }

@@ -603,6 +603,19 @@ export default function Result({ route, navigation }) {
   const qdis = () => {
     var i;
     var a = [];
+    for (i = 0; i < quesarr.length; i++) {
+      if (sec._id === quesarr[i].secid) {
+        var ques = quesarr[i].ques;
+        // console.log(quesarr[i])
+        var b = (
+          <View key={i} style={classes.ques}>
+            {qtype(ques, quesarr[i])}
+          </View>
+        );
+
+        a.push(b);
+      }
+    }
     for (i = sec.startindex; i <= sec.endindex; i++) {
       var ques = quesarr[i].ques;
       // console.log(quesarr[i])
@@ -662,7 +675,7 @@ export default function Result({ route, navigation }) {
               <Text>Total Question</Text>
             </View>
             <View>
-              <Text>{sec.endindex - sec.startindex + 1}</Text>
+              <Text>{sec.questions.length}</Text>
             </View>
           </View>
           <View style={classes.tr}>

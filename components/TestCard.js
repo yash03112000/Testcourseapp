@@ -261,7 +261,7 @@ export default function TestCard({ item: test, navigation }) {
                 Questions:
               </Text>
               <Text style={{ color: 'black', fontSize: confont }}>
-                {test.question_id.length}
+                {test.total_questions.length}
               </Text>
             </View>
             <View style={classes.randiv}>

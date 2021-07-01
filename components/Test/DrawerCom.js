@@ -198,95 +198,96 @@ export default function SwipeableTemporaryDrawer({ navigation }) {
               maxHeight: '100%',
             }}
           >
-            {result.user_response.map((res, i) => {
-              if (i >= section.startindex && i <= section.endindex) {
-                if (!res.visited) {
-                  return (
-                    <Text
-                      key={i}
-                      onPress={() => changeqid(res._id)}
-                      gutterBottom
-                      style={{
-                        backgroundColor: 'white',
-                        color: 'black',
-                        padding: 15,
-                        borderRadius: 15,
-                        margin: 5,
-                      }}
-                    >
-                      {i + 1}
-                    </Text>
-                  );
-                } else if (res.answered) {
-                  return (
-                    <Text
-                      key={i}
-                      onPress={() => changeqid(res._id)}
-                      gutterBottom
-                      style={{
-                        backgroundColor: 'green',
-                        color: 'white',
-                        padding: 15,
-                        borderRadius: 15,
-                        margin: 5,
-                      }}
-                    >
-                      {i + 1}
-                    </Text>
-                  );
-                } else if (res.notanswered) {
-                  return (
-                    <Text
-                      key={i}
-                      onPress={() => changeqid(res._id)}
-                      gutterBottom
-                      style={{
-                        backgroundColor: 'red',
-                        color: 'white',
-                        padding: 15,
-                        borderRadius: 15,
-                        margin: 5,
-                      }}
-                    >
-                      {i + 1}
-                    </Text>
-                  );
-                } else if (res.markedforreview) {
-                  return (
-                    <Text
-                      key={i}
-                      onPress={() => changeqid(res._id)}
-                      gutterBottom
-                      style={{
-                        backgroundColor: 'purple',
-                        color: 'white',
-                        padding: 15,
-                        borderRadius: 15,
-                        margin: 5,
-                      }}
-                    >
-                      {i + 1}
-                    </Text>
-                  );
-                } else if (res.markedanswered) {
-                  return (
-                    <Text
-                      key={i}
-                      onPress={() => changeqid(res._id)}
-                      gutterBottom
-                      style={{
-                        backgroundColor: 'pink',
-                        color: 'white',
-                        padding: 15,
-                        borderRadius: 15,
-                        margin: 5,
-                      }}
-                    >
-                      {i + 1}
-                    </Text>
-                  );
-                }
-              }
+            {result.sections.map((sec, i) => {
+              if (sec._id == section._id)
+                return sec.questions.map((res, i) => {
+                  if (!res.visited) {
+                    return (
+                      <Text
+                        key={i}
+                        onPress={() => changeqid(res._id)}
+                        gutterBottom
+                        style={{
+                          backgroundColor: 'white',
+                          color: 'black',
+                          padding: 15,
+                          borderRadius: 15,
+                          margin: 5,
+                        }}
+                      >
+                        {i + 1}
+                      </Text>
+                    );
+                  } else if (res.answered) {
+                    return (
+                      <Text
+                        key={i}
+                        onPress={() => changeqid(res._id)}
+                        gutterBottom
+                        style={{
+                          backgroundColor: 'green',
+                          color: 'white',
+                          padding: 15,
+                          borderRadius: 15,
+                          margin: 5,
+                        }}
+                      >
+                        {i + 1}
+                      </Text>
+                    );
+                  } else if (res.notanswered) {
+                    return (
+                      <Text
+                        key={i}
+                        onPress={() => changeqid(res._id)}
+                        gutterBottom
+                        style={{
+                          backgroundColor: 'red',
+                          color: 'white',
+                          padding: 15,
+                          borderRadius: 15,
+                          margin: 5,
+                        }}
+                      >
+                        {i + 1}
+                      </Text>
+                    );
+                  } else if (res.markedforreview) {
+                    return (
+                      <Text
+                        key={i}
+                        onPress={() => changeqid(res._id)}
+                        gutterBottom
+                        style={{
+                          backgroundColor: 'purple',
+                          color: 'white',
+                          padding: 15,
+                          borderRadius: 15,
+                          margin: 5,
+                        }}
+                      >
+                        {i + 1}
+                      </Text>
+                    );
+                  } else if (res.markedanswered) {
+                    return (
+                      <Text
+                        key={i}
+                        onPress={() => changeqid(res._id)}
+                        gutterBottom
+                        style={{
+                          backgroundColor: 'pink',
+                          color: 'white',
+                          padding: 15,
+                          borderRadius: 15,
+                          margin: 5,
+                        }}
+                      >
+                        {i + 1}
+                      </Text>
+                    );
+                  }
+                });
             })}
           </ScrollView>
         </View>

@@ -20,6 +20,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import Banner from '../Home/Banner';
 import CourseCard from '../Home/CourseCard';
+import TestCard from '../Home/TestCard';
 
 const { manifest } = Constants;
 
@@ -28,7 +29,7 @@ const height = Dimensions.get('window').height;
 
 var confont = 12;
 
-export default function TestCard({ item: test, navigation }) {
+export default function Home({ item: test, navigation }) {
   if (Platform.OS === 'web') {
     server = 'http://localhost:8080';
   } else {
@@ -88,7 +89,7 @@ export default function TestCard({ item: test, navigation }) {
             horizontal
             data={tests}
             keyExtractor={(item) => item._id}
-            renderItem={({ item }) => <CourseCard {...{ item, navigation }} />}
+            renderItem={({ item }) => <TestCard {...{ item, navigation }} />}
           />
         </View>
       </View>

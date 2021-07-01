@@ -1,32 +1,30 @@
 // Action Types
 
-export const CHANGE = 'CHANGERESULT'
+export const CHANGE = 'CHANGERESULT';
 
 // Action Creators
 
-let noteID = 0
+let noteID = 0;
 
 export function setResultact(result) {
   return {
     type: CHANGE,
-    result
-  }
+    result,
+  };
 }
-
 
 // reducer
 
-const initialState = {user_response:[]}
+const initialState = { sections: [] };
 
-const ResultReducer = (state = initialState, action)=>{
+const ResultReducer = (state = initialState, action) => {
   switch (action.type) {
     case CHANGE:
-      return action.result
-
+      return action.result;
 
     default:
-      return state
+      return state;
   }
-}
+};
 
-export default ResultReducer
+export default ResultReducer;

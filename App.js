@@ -56,6 +56,7 @@ export default function App() {
         <Stack.Screen name="Payment" component={Payment} />
         <Stack.Screen name="Course" component={Course} />
         <Stack.Screen name="Learn" component={Learn} />
+        <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>
   );
