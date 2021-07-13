@@ -63,7 +63,7 @@ export default function TestCard({ data, navigation }) {
   };
   const enter = (lesid) => {
     console.log('a');
-    navigation.replace('Learn', {
+    navigation.push('Learn', {
       // screen: 'Test',
       params: { id: lesid },
     });

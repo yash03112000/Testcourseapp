@@ -59,7 +59,7 @@ export default function Card({ data, route, navigation }) {
           setLoad(false);
         });
       } else if (res.status == 403) {
-        navigation.replace('/LogIn');
+        navigation.replace('LogIn');
       }
     });
   };
@@ -68,6 +68,11 @@ export default function Card({ data, route, navigation }) {
     // WebBrowser.openAuthSessionAsync(`${server}/paymentredirect/${test._id}`);
     navigation.replace('Payment', { testid: id });
   };
+  // const enter = () => {
+  //   // console.log(test._id);lud
+  //   // WebBrowser.openAuthSessionAsync(`${server}/paymentredirect/${test._id}`);
+  //   navigation.replace('Payment', { testid: id });
+  // };
 
   const register = (e) => {
     e.preventDefault();
@@ -85,7 +90,7 @@ export default function Card({ data, route, navigation }) {
           setStatus(true);
         });
       } else if (res.status == 403) {
-        navigation.replace('/LogIn');
+        navigation.replace('LogIn');
       }
     });
   };
@@ -94,7 +99,7 @@ export default function Card({ data, route, navigation }) {
     if (status) {
       return (
         <>
-          <View style={classes.rest}>
+          {/* <View style={classes.rest}>
             <Button
               style={{
                 backgroundColor: 'hsl(0,60%,60%)',
@@ -105,11 +110,11 @@ export default function Card({ data, route, navigation }) {
                 margin: 10,
                 // border: '0.2px solid black',
               }}
-              // onPress={pay}
+              onPress={enter}
             >
               Enter
             </Button>
-          </View>
+          </View> */}
         </>
       );
     } else {

@@ -79,7 +79,7 @@ export default function Home({ item: data, navigation }) {
 
   const enter = () => {
     console.log('a');
-    navigation.replace('Course', {
+    navigation.push('Course', {
       // screen: 'Test',
       params: { id: data._id },
     });

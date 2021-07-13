@@ -33,6 +33,7 @@ import {
   FontAwesome,
 } from 'react-native-vector-icons';
 import { Provider as StoreProvider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import store from './redux/store';
 
 // import { WebView } from 'react-native-webview';
@@ -46,19 +47,21 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Tab" component={TabCom} />
-        <Stack.Screen name="LogIn" component={LogIn} />
-        <Stack.Screen name="SignUp" component={SignUp} />
-        <Stack.Screen name="DrawerNav" component={DrawerNav} />
-        <Stack.Screen name="Result" component={Result} />
-        <Stack.Screen name="Payment" component={Payment} />
-        <Stack.Screen name="Course" component={Course} />
-        <Stack.Screen name="Learn" component={Learn} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <PaperProvider>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Tab" component={TabCom} />
+          <Stack.Screen name="LogIn" component={LogIn} />
+          <Stack.Screen name="SignUp" component={SignUp} />
+          <Stack.Screen name="DrawerNav" component={DrawerNav} />
+          <Stack.Screen name="Result" component={Result} />
+          <Stack.Screen name="Payment" component={Payment} />
+          <Stack.Screen name="Course" component={Course} />
+          <Stack.Screen name="Learn" component={Learn} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </PaperProvider>
   );
 }
 
