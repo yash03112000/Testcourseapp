@@ -77,10 +77,17 @@ const classes = StyleSheet.create({
 export default function Home({ item: data, navigation }) {
   // const router = useRouter();
 
+  // const enter = () => {
+  //   console.log('a');
+  //   navigation.replace('DrawerNav', {
+  //     screen: 'Test',
+  //     params: { id: data._id },
+  //   });
+  // };
   const enter = () => {
     console.log('a');
-    navigation.replace('DrawerNav', {
-      screen: 'Test',
+    navigation.replace('TestInstructions', {
+      // screen: 'Test',
       params: { id: data._id },
     });
   };

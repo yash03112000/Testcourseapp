@@ -23,8 +23,11 @@ import Home from './components/Tab/Home';
 import TestTab from './components/Tab/Test';
 import Search from './components/Tab/Search';
 import CourseTab from './components/Tab/Course';
+import DigitalTab from './components/Tab/Digital';
 import Course from './components/Course/index';
+import Digital from './components/Digital/index';
 import Learn from './components/Learn/index';
+import TestInstructions from './components/TestInstructions/index';
 
 import {
   MaterialCommunityIcons,
@@ -57,8 +60,10 @@ export default function App() {
           <Stack.Screen name="Result" component={Result} />
           <Stack.Screen name="Payment" component={Payment} />
           <Stack.Screen name="Course" component={Course} />
+          <Stack.Screen name="Digital" component={Digital} />
           <Stack.Screen name="Learn" component={Learn} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="TestInstructions" component={TestInstructions} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
@@ -105,6 +110,15 @@ const TabCom = () => {
         options={{
           tabBarIcon: ({ color, size }) => (
             <FontAwesome name="graduation-cap" color={color} size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="My Downloads"
+        component={DigitalTab}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="clouddownload" color={color} size={size} />
           ),
         }}
       />

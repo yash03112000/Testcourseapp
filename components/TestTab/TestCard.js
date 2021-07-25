@@ -77,13 +77,14 @@ const classes = StyleSheet.create({
   },
 });
 
-export default function Home({ item: data, navigation }) {
+export default function Home({ item: data }) {
   // const router = useRouter();
+
   const enter = () => {
     console.log('a');
-    navigation.push('Course', {
+    navigation.push('TestInstructions', {
       // screen: 'Test',
-      params: { id: data.slug },
+      params: { id: data._id },
     });
   };
 

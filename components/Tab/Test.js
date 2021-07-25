@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   FlatList,
+  TouchableOpacity,
 } from 'react-native';
 import {
   ActivityIndicator,
@@ -16,7 +17,7 @@ import {
   Button,
   Divider,
 } from 'react-native-paper';
-import CourseCard from '../TestTab/CourseCard';
+import TestCard from '../TestTab/TestCard';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
@@ -26,7 +27,7 @@ const height = Dimensions.get('window').height;
 
 var confont = 12;
 
-export default function TestCard({ item: test, navigation }) {
+export default function Card({ item: test, navigation }) {
   if (Platform.OS === 'web') {
     server = 'http://localhost:8080';
   } else {
@@ -46,7 +47,7 @@ export default function TestCard({ item: test, navigation }) {
   const initial = () => {
     // console.log('aa');
     setLoad(true);
-    fetch(`${server}/CourseServer/`, { method: 'GET' }).then((res) => {
+    fetch(`${server}/DashboardServer/user`, { method: 'GET' }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {
@@ -63,6 +64,12 @@ export default function TestCard({ item: test, navigation }) {
     <View>
       <Text>Test</Text>
     </View>
+  ) : !status ? (
+    <View style={classes.main}>
+      <TouchableOpacity onPress={() => navigation.replace('LogIn')}>
+        <Text>You are not logged in!!Click here to LogIn</Text>
+      </TouchableOpacity>
+    </View>
   ) : (
     <ScrollView style={classes.main}>
       <View style={classes.heading}>
@@ -71,7 +78,7 @@ export default function TestCard({ item: test, navigation }) {
           style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
         >
           {tests.map((item, i) => (
-            <CourseCard {...{ item, navigation }} key={i} />
+            <TestCard {...{ item, navigation }} key={i} />
           ))}
         </View>
       </View>

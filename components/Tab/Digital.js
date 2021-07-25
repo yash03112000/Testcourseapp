@@ -17,7 +17,8 @@ import {
   Button,
   Divider,
 } from 'react-native-paper';
-import CourseCard from '../CourseTab/CourseCard';
+import DigitalCard from '../DigitalTab/DigitalCard';
+
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
@@ -48,11 +49,10 @@ export default function TestCard({ item: test, navigation }) {
     // console.log('aa');
     setLoad(true);
     fetch(`${server}/DashboardServer/user`, { method: 'GET' }).then((res) => {
-      // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {
-          setCourses(res.courses);
-          // setTests(res.tests);
+          // setCourses(res.courses);
+          setTests(res.digitals);
           setStatus(true);
         });
       } else if (res.status == 403) setStatus(false);
@@ -62,7 +62,7 @@ export default function TestCard({ item: test, navigation }) {
 
   return load ? (
     <View>
-      <Text>Course</Text>
+      <Text>My Downloads</Text>
     </View>
   ) : !status ? (
     <View style={classes.main}>
@@ -73,12 +73,12 @@ export default function TestCard({ item: test, navigation }) {
   ) : (
     <ScrollView style={classes.main}>
       <View style={classes.heading}>
-        <Text style={classes.headtext}>My Courses</Text>
+        <Text style={classes.headtext}>My Downloads</Text>
         <View
           style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
         >
-          {courses.map((item, i) => (
-            <CourseCard {...{ item, navigation }} key={i} />
+          {tests.map((item, i) => (
+            <DigitalCard {...{ item, navigation }} key={i} />
           ))}
         </View>
       </View>

@@ -7,6 +7,7 @@ import {
   Image,
   ScrollView,
   Dimensions,
+  TouchableOpacity,
   ImageBackground,
 } from 'react-native';
 import {
@@ -76,28 +77,38 @@ const classes = StyleSheet.create({
   },
 });
 
-export default function Home({ item: data }) {
+export default function Home({ item: data, navigation }) {
   // const router = useRouter();
+
+  const enter = () => {
+    console.log('a');
+    navigation.push('Digital', {
+      // screen: 'Test',
+      params: { id: data._id },
+    });
+  };
 
   return (
     <View>
       <View style={classes.head}>
-        <View
-          style={classes.imgdiv}
-          onPress={() => router.replace(`/course/${data._id}`)}
-        >
-          {data.thumbnail == '' ? (
-            <Image
-              source={require(`../../assets/banner.jpg`)}
-              style={classes.img}
-            />
-          ) : (
-            <Image
-              //   source={require(`../../assets/${data.thumbnail}.jpg`)}
-              style={classes.img}
-            />
-          )}
-        </View>
+        <TouchableOpacity onPress={enter} style={classes.imgdiv}>
+          <View
+          // style={classes.imgdiv}
+          >
+            {data.thumbnail == '' ? (
+              <Image
+                source={require(`../../assets/banner.jpg`)}
+                style={classes.img}
+              />
+            ) : (
+              <Image
+                //   source={require(`../../assets/${data.thumbnail}.jpg`)}
+                style={classes.img}
+              />
+            )}
+          </View>
+        </TouchableOpacity>
+
         <View style={classes.condiv}>
           <View>
             <Text style={classes.title}>{data.title}</Text>

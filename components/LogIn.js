@@ -81,7 +81,7 @@ export default function LogIn({ navigation }) {
       );
       console.log(authResult);
       if (authResult.type === 'success') {
-        navigation.replace('Dashboard');
+        navigation.replace('Tab');
       }
       // console.log(authResult)
       // await this.setState({ authResult: authResult })

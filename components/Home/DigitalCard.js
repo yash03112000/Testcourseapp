@@ -79,9 +79,8 @@ export default function Home({ item: data, navigation }) {
 
   const enter = () => {
     console.log('a');
-    navigation.push('Course', {
-      // screen: 'Test',
-      params: { id: data.slug },
+    navigation.push('Digital', {
+      params: { id: data._id },
     });
   };
 

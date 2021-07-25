@@ -236,10 +236,17 @@ export default function TestCard({ route, navigation }) {
               }}
             >
               <Text style={{ color: 'white' }}>
-                {moment.duration(status.positionMillis).minutes()}:
+                {/* {moment.duration(status.positionMillis).minutes()}:
                 {moment.duration(status.positionMillis).seconds()}/
                 {moment.duration(status.durationMillis).minutes()}:
-                {moment.duration(status.playableDurationMillis).seconds()}
+                {moment.duration(status.playableDurationMillis).seconds()} */}
+                {moment('1900-01-01 00:00:00')
+                  .add(status.positionMillis, 'milliseconds')
+                  .format('HH:mm:ss')}
+                /
+                {moment('1900-01-01 00:00:00')
+                  .add(status.playableDurationMillis, 'milliseconds')
+                  .format('HH:mm:ss')}
               </Text>
               <View style={{ display: 'flex', flexDirection: 'row' }}>
                 <Button

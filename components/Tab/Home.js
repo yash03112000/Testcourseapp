@@ -21,6 +21,7 @@ import Constants from 'expo-constants';
 import Banner from '../Home/Banner';
 import CourseCard from '../Home/CourseCard';
 import TestCard from '../Home/TestCard';
+import DigitalCard from '../Home/DigitalCard';
 
 const { manifest } = Constants;
 
@@ -41,6 +42,7 @@ export default function Home({ item: test, navigation }) {
   const [status, setStatus] = useState(false);
   const [courses, setCourses] = useState([]);
   const [tests, setTests] = useState([]);
+  const [digitals, setDigitals] = useState([]);
 
   useEffect(() => {
     initial();
@@ -55,6 +57,7 @@ export default function Home({ item: test, navigation }) {
         res.json().then((res) => {
           setCourses(res.courses);
           setTests(res.tests);
+          setDigitals(res.digitals);
           setStatus(true);
         });
       } else if (res.status == 403) setStatus(false);
@@ -90,6 +93,18 @@ export default function Home({ item: test, navigation }) {
             data={tests}
             keyExtractor={(item) => item._id}
             renderItem={({ item }) => <TestCard {...{ item, navigation }} />}
+          />
+        </View>
+      </View>
+      <View style={classes.heading}>
+        <Text style={classes.headtext}>Digital Products</Text>
+        <View>
+          <FlatList
+            style={{}}
+            horizontal
+            data={digitals}
+            keyExtractor={(item) => item._id}
+            renderItem={({ item }) => <DigitalCard {...{ item, navigation }} />}
           />
         </View>
       </View>

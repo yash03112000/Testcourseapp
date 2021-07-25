@@ -37,25 +37,25 @@ export default function Card({ data, route, navigation }) {
   const [load, setLoad] = useState(true);
   const [status, setStatus] = useState(false);
   const [fresh, setFresh] = useState([]);
-  const [id, setID] = useState('');
+  // const [id, setID] = useState('');
 
   useEffect(() => {
     initial();
   }, []);
-  const { id: slug } = route.params.params;
+  const { id } = route.params.params;
 
   const initial = () => {
-    fetch(`${server}/CourseServer/permit`, {
+    fetch(`${server}/DigitalServer/permit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ slug }),
+      body: JSON.stringify({ id }),
     }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {
-          setID(res.data._id);
+          // setID(res.data._id);
           setStatus(res.status);
           setFresh(res.data);
           setLoad(false);
@@ -78,7 +78,7 @@ export default function Card({ data, route, navigation }) {
 
   const register = (e) => {
     e.preventDefault();
-    fetch(`${server}/payment/course/registerfree`, {
+    fetch(`${server}/payment/digital/registerfree`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -258,7 +258,7 @@ export default function Card({ data, route, navigation }) {
   };
   return load ? (
     <View>
-      <Text>Lesson</Text>
+      <Text>loading...</Text>
     </View>
   ) : (
     <View style={classes.main}>
