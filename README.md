@@ -22,7 +22,7 @@ yarn start
 
 Following are the Packages used. Feel free to [Email](mailto:yashag@iitk.ac.in) in case you need help or find any bug
 
-- [React Native](https://github.com/facebook/react-native)
+- [`React Native`](https://github.com/facebook/react-native)
 - [`Expo`](https://github.com/expo/expo)
-- [Redux](https://github.com/reduxjs/redux)
-- [Reanimated](https://github.com/software-mansion/react-native-reanimated)
+- [`Redux`](https://github.com/reduxjs/redux)
+- [`Reanimated`](https://github.com/software-mansion/react-native-reanimated)
