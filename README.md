@@ -1,6 +1,6 @@
 This is a [React Native](https://github.com/facebook/react-native) project with Native Modules managed with [`Expo`](https://github.com/expo/expo).
 
-This App was developed for OOkul Samadhan Pvt Ltd.
+This App was developed for [`OOkul Samadhan Pvt Ltd`](https://ookul.co/).
 Backend API for this App Can be found at [Testcourse](https://github.com/yash03112000/TestCourse)
 
 In This Platfrom Users can
