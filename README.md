@@ -1,17 +1,17 @@
-This is a [Nextjs](https://nextjs.org) project with Native Modules managed with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a [React Native](https://github.com/facebook/react-native) project with Native Modules managed with [`Expo`](https://github.com/expo/expo).
 
-This Platfrom was developed for OOkul Samadhan Pvt Ltd.
-Mobile Apps can be found at [Testcourse](https://github.com/yash03112000/TestCourseApp)
+This App was developed for OOkul Samadhan Pvt Ltd.
+Backend API for this App Can be found at [Testcourse](https://github.com/yash03112000/TestCourse)
+
 In This Platfrom Users can
-
-## Getting Started
-
-First, run the development server:
 
 - Give Test and Check Results using data visualization on OOkul Platform
 - Register for Courses, make Payments and Watch Video Lectures.
 - Users can login using Using Facebook/Google/Email-id
-- P
+
+## Getting Started
+
+First, run the development server:
 
 ```bash
 expo start
