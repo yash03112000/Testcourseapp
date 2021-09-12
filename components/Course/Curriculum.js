@@ -18,6 +18,7 @@ import {
   List,
 } from 'react-native-paper';
 import moment from 'moment';
+const { server } = require('../config.js');
 
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
@@ -30,11 +31,11 @@ const height = Dimensions.get('window').height;
 var confont = 12;
 
 export default function TestCard({ data, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
 
   const [load, setLoad] = useState(false);
   const lessonfun = () => {

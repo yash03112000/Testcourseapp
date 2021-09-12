@@ -26,13 +26,14 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 var confont = 12;
+const { server } = require('../config.js');
 
 export default function Card({ data, route, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
 
   const [load, setLoad] = useState(true);
   const [status, setStatus] = useState(false);

@@ -15,14 +15,15 @@ import TestCard from './TestCard';
 import { FlatList } from 'react-native-gesture-handler';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+const { server } = require('./config.js');
 
 export default function Dashboard({ navigation }) {
   // var server = 'http://localhost:8080'
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
   const [Msg, setMsg] = useState('');
   const [load, setLoad] = useState(true);
   const [tests, setTests] = useState([]);

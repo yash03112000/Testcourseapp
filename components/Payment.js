@@ -13,17 +13,18 @@ import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
 const { manifest } = Constants;
 import AutoHeightWebView from 'react-native-autoheight-webview';
+const { server } = require('./config.js');
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function LogIn({ route }) {
   // var server = 'http://localhost:8080'
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
   const [Name, setName] = useState('');
   const [Password, setPassword] = useState('');
   const [msg, setMsg] = useState('');

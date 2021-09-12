@@ -19,6 +19,7 @@ import { setQuesarract } from '../../redux/QuesarrayReducer';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import { Picker } from '@react-native-picker/picker';
 import Constants from 'expo-constants';
+const { server } = require('../config.js');
 
 const { manifest } = Constants;
 
@@ -26,11 +27,11 @@ const { manifest } = Constants;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
-if (Platform.OS === 'web') {
-  server = 'http://localhost:8080';
-} else {
-  server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-}
+// if (Platform.OS === 'web') {
+//   server = 'http://localhost:8080';
+// } else {
+//   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+// }
 
 const classes = StyleSheet.create({
   sec1: {

@@ -45,13 +45,14 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 var confont = 12;
+const { server } = require('../config.js');
 
 export default function TestCard({ route, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
 
   const [data, setData] = useState([]);
   const [lesson, setLesson] = useState([]);

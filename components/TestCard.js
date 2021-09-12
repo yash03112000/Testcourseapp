@@ -18,6 +18,7 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+const { server } = require('./config.js');
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -25,11 +26,11 @@ const height = Dimensions.get('window').height;
 var confont = 12;
 
 export default function TestCard({ item: test, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
 
   const [msg, setMsg] = useState('');
   const [load, setLoad] = useState(true);

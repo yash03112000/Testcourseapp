@@ -25,15 +25,16 @@ import { Rating, AirbnbRating } from 'react-native-ratings';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+const { server } = require('../config.js');
 
 var confont = 12;
 
 export default function Banner({ data, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
 
   const [msg, setMsg] = useState('');
   const [load, setLoad] = useState(false);

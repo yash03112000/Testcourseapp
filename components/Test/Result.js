@@ -17,6 +17,7 @@ import { PieChart } from 'react-native-svg-charts';
 import { Circle, G, Line, Text as SVGText } from 'react-native-svg';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import Constants from 'expo-constants';
+const { server } = require('../config.js');
 
 const { manifest } = Constants;
 
@@ -24,11 +25,11 @@ const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 
 export default function Result({ route, navigation }) {
-  if (Platform.OS === 'web') {
-    server = 'http://localhost:8080';
-  } else {
-    server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  }
+  // if (Platform.OS === 'web') {
+  //   server = 'http://localhost:8080';
+  // } else {
+  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
+  // }
   const { id } = route.params;
   const [load, setLoad] = useState(true);
   const [loadques, setLoadques] = useState(true);
