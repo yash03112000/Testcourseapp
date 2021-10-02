@@ -20,6 +20,7 @@ import AutoHeightWebView from 'react-native-autoheight-webview';
 import { Picker } from '@react-native-picker/picker';
 import Constants from 'expo-constants';
 const { server } = require('../config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { manifest } = Constants;
 
@@ -70,6 +71,8 @@ export default function Question({ test }) {
   const [loading, setLoading] = useState(true);
   const [ques, setQues] = useState({});
   const [answer, setAnswer] = useState([]);
+  const [token, setToken] = useState('');
+
   const {
     DataReducer: data,
     QuesidReducer: id,
@@ -83,6 +86,7 @@ export default function Question({ test }) {
   const setData = (a) => dispatch(setDataact(a));
   const setQuesid = (a) => dispatch(setQuesidact(a));
   const setQuesarr = (a) => dispatch(setQuesarract(a));
+
   //   const {id:test} = router.query;
 
   useEffect(() => {
@@ -110,6 +114,8 @@ export default function Question({ test }) {
   };
 
   const initial = () => {
+    const token = await AsyncStorage.getItem('token');
+    setToken(token);
     setLoading(true);
     var data = [...quesarr];
     data.map((q, i) => {
@@ -123,6 +129,7 @@ export default function Question({ test }) {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
+              'x-access-token': token,
             },
             body: JSON.stringify({ id, test, secid: section._id }),
           }).then((res) => {
@@ -159,6 +166,7 @@ export default function Question({ test }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id, test, answer, secid: section._id }),
     }).then((res) => {
@@ -182,6 +190,7 @@ export default function Question({ test }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id, test, secid: section._id }),
     }).then((res) => {
@@ -207,6 +216,7 @@ export default function Question({ test }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id, test, answer, secid: section._id }),
     }).then((res) => {

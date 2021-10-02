@@ -11,33 +11,27 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import * as Linking from 'expo-linking';
+import * as AuthSession from 'expo-auth-session';
 const { manifest } = Constants;
 const { server } = require('./config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import GoogleAuth from './AuthComponents/Google';
+import FBAuth from './AuthComponents/Facebook';
+
+const useProxy = true;
+const redirectUri = AuthSession.makeRedirectUri({
+  useProxy,
+});
+
+// console.log(redirectUri);
+WebBrowser.maybeCompleteAuthSession();
 
 export default function LogIn({ navigation }) {
-  // var server = 'http://localhost:8080'
-  // if (Platform.OS === 'web') {
-  //   server = 'http://localhost:8080';
-  // } else {
-  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  // }
-  // console.log(server);
   const [Name, setName] = useState('');
   const [Password, setPassword] = useState('');
   const [msg, setMsg] = useState('');
 
-  const handleRedirect = async (event) => {
-    // let { path, queryParams } = Linking.parse(url);
-    // console.log(Linking.parse(url))
-    WebBrowser.dismissBrowser();
-  };
-
-  const addLinkingListener = () => {
-    Linking.addEventListener('url', handleRedirect);
-  };
-  const removeLinkingListener = () => {
-    // Linking.removeEventListener('url',handleRedirect)
-  };
+  // console.log(response);
 
   const fb = async () => {
     // gets the app's deep link
@@ -66,45 +60,25 @@ export default function LogIn({ navigation }) {
     // setResult(result);
   };
 
-  const google = async () => {
-    // gets the app's deep link
-    let redirectUrl = await Linking.getInitialURL();
-    // console.log(redirectUrl)
-    // this should change depending on where the server is running
-    let authUrl = `${server}/auth/google?applogin=true&linkingUri=${Linking.createURL(
-      '/?'
-    )}`;
-    // addLinkingListener()
-    try {
-      let authResult = await WebBrowser.openAuthSessionAsync(
-        authUrl,
-        redirectUrl
-      );
-      console.log(authResult);
-      if (authResult.type === 'success') {
-        navigation.replace('Tab');
-      }
-      // console.log(authResult)
-      // await this.setState({ authResult: authResult })
-    } catch (err) {
-      console.log('ERROR:', err);
-    }
-  };
-
   const login = () => {
     fetch(`${server}/auth/local`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        credentials: 'same-origin',
       },
       body: JSON.stringify({ username: Name, password: Password }),
     }).then((res) => {
+      // console.log(res.headers);
       if (res.status === 200) {
         res.json().then((res) => {
           if (!res.status) {
             setMsg(res.msg);
           } else {
-            navigation.replace('Dashboard');
+            // console.log(res.accesstoken);
+            AsyncStorage.setItem('token', res.accesstoken).then(() => {
+              navigation.replace('Tab');
+            });
           }
         });
       }
@@ -117,18 +91,8 @@ export default function LogIn({ navigation }) {
       <Text style={styles.header}>LogIn To Your TestCourse Account</Text>
       <Divider />
       <View style={styles.btnbox}>
-        <Button mode="contained" style={styles.fb} icon="facebook" onPress={fb}>
-          SignIn with FaceBook
-        </Button>
-        <Button
-          mode="contained"
-          color="black"
-          style={styles.google}
-          icon="google"
-          onPress={google}
-        >
-          SignIn with Google
-        </Button>
+        <FBAuth {...{ navigation }} />
+        <GoogleAuth {...{ navigation }} />
       </View>
       <View style={styles.btnbox}>
         <View

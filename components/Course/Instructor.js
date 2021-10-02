@@ -16,6 +16,8 @@ import {
   Button,
   Divider,
 } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 import { Ionicons, Entypo, AntDesign } from 'react-native-vector-icons';
 
 import * as WebBrowser from 'expo-web-browser';

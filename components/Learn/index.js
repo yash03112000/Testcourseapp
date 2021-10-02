@@ -46,6 +46,7 @@ const height = Dimensions.get('window').height;
 
 var confont = 12;
 const { server } = require('../config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function TestCard({ route, navigation }) {
   // if (Platform.OS === 'web') {
@@ -83,12 +84,15 @@ export default function TestCard({ route, navigation }) {
   }, []);
   const { id } = route.params.params;
 
-  const initial = () => {
+  const initial = async () => {
     setLoad(true);
+    const token = await AsyncStorage.getItem('token');
+
     fetch(`${server}/CourseServer/lessondata`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id }),
     }).then((res) => {

@@ -26,6 +26,7 @@ const { manifest } = Constants;
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const { server } = require('../config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Test({ route, navigation }) {
   // if (Platform.OS === 'web') {
@@ -35,6 +36,8 @@ export default function Test({ route, navigation }) {
   // }
   const [Msg, setMsg] = useState('');
   const [load, setLoad] = useState(true);
+  const [token, setToken] = useState('');
+
   const {
     DataReducer: data,
     QuesidReducer: quesid,
@@ -61,7 +64,15 @@ export default function Test({ route, navigation }) {
 
   const initial = async () => {
     // console.log(server);
-    var res = await fetch(`${server}/Testserver/${id}`, { method: 'GET' });
+    const token = await AsyncStorage.getItem('token');
+    setToken(token);
+    var res = await fetch(`${server}/Testserver/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    });
     if (res.status == 403) {
       navigation.replace('LogIn');
     }
@@ -107,6 +118,7 @@ export default function Test({ route, navigation }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ testid: id }),
     }).then((res) => {

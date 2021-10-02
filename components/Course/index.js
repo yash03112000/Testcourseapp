@@ -22,6 +22,7 @@ import Data from './Data';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -44,10 +45,18 @@ export default function TestCard({ route, navigation }) {
   }, []);
   const { id } = route.params.params;
 
-  const initial = () => {
+  const initial = async () => {
     // console.log('aa');
+    const token = await AsyncStorage.getItem('token');
+
     setLoad(true);
-    fetch(`${server}/CourseServer/${id}`, { method: 'GET' }).then((res) => {
+    fetch(`${server}/CourseServer/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {

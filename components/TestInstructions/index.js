@@ -22,6 +22,7 @@ import Data from './Data';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -47,22 +48,26 @@ export default function TestCard({ route, navigation }) {
   const initial = () => {
     // console.log('aa');
     setLoad(true);
-    fetch(`${server}/CourseServer/testdetails/${id}`, { method: 'GET' }).then(
-      (res) => {
-        // console.log(res.status)
-        if (res.status === 200) {
-          res.json().then((res) => {
-            setData(res.routes);
-            // console.log(res.routes);
-            setLoad(false);
-            // setTests(res.tests);
-            // setStatus(true);
-          });
-        }
-        //  else if (res.status == 403) setStatus(false);
-        else if (res.status == 404) navigation.navigate('404');
+    fetch(`${server}/CourseServer/testdetails/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    }).then((res) => {
+      // console.log(res.status)
+      if (res.status === 200) {
+        res.json().then((res) => {
+          setData(res.routes);
+          // console.log(res.routes);
+          setLoad(false);
+          // setTests(res.tests);
+          // setStatus(true);
+        });
       }
-    );
+      //  else if (res.status == 403) setStatus(false);
+      else if (res.status == 404) navigation.navigate('404');
+    });
   };
 
   // console.log(data);

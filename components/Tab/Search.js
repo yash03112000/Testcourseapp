@@ -21,6 +21,7 @@ import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 import { Entypo } from 'react-native-vector-icons';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -39,6 +40,10 @@ export default function TestCard({ item: test, navigation }) {
   const [status, setStatus] = useState(false);
   const [search, setSearch] = useState('');
 
+  const logout = async () => {
+    await AsyncStorage.removeItem('token');
+  };
+
   return load ? (
     <View>
       <Text>Search</Text>
@@ -54,6 +59,9 @@ export default function TestCard({ item: test, navigation }) {
       }}
     >
       <View style={classes.main}>
+        <View>
+          <Button onPress={logout}>LogOut</Button>
+        </View>
         <View>
           <Searchbar
             placeholder="Search"

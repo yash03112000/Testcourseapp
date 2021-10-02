@@ -21,6 +21,7 @@ import TestCard from '../TestTab/TestCard';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -45,15 +46,19 @@ export default function Card({ item: test, navigation }) {
     initial();
   }, []);
 
-  const initial = () => {
+  const initial = async () => {
     // console.log('aa');
     setLoad(true);
-    fetch(`${server}/DashboardServer/user`, { method: 'GET' }).then((res) => {
+    const token = await AsyncStorage.getItem('token');
+    fetch(`${server}/DashboardServer/`, {
+      method: 'GET',
+      headers: { 'x-access-token': token },
+    }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {
           // setCourses(res.courses);
-          setTests(res.tests);
+          setTests(res);
           setStatus(true);
         });
       } else if (res.status == 403) setStatus(false);
@@ -78,8 +83,8 @@ export default function Card({ item: test, navigation }) {
         <View
           style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
         >
-          {tests.map((item, i) => (
-            <TestCard {...{ item, navigation }} key={i} />
+          {tests.tests.map((item, i) => (
+            <TestCard data={item} type={tests.type} key={i} />
           ))}
         </View>
       </View>

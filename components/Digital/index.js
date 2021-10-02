@@ -25,6 +25,7 @@ const { manifest } = Constants;
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var confont = 12;
 const { server } = require('../config.js');
@@ -44,25 +45,31 @@ export default function TestCard({ route, navigation }) {
   }, []);
   const { id } = route.params.params;
 
-  const initial = () => {
+  const initial = async () => {
     // console.log('aa');
+    const token = await AsyncStorage.getItem('token');
+
     setLoad(true);
-    fetch(`${server}/DigitalServer/details/${id}`, { method: 'GET' }).then(
-      (res) => {
-        // console.log(res.status)
-        if (res.status === 200) {
-          res.json().then((res) => {
-            setData(res.routes);
-            // console.log(res.routes);
-            setLoad(false);
-            // setTests(res.tests);
-            // setStatus(true);
-          });
-        }
-        //  else if (res.status == 403) setStatus(false);
-        else if (res.status == 404) navigation.navigate('404');
+    fetch(`${server}/DigitalServer/details/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
+    }).then((res) => {
+      // console.log(res.status)
+      if (res.status === 200) {
+        res.json().then((res) => {
+          setData(res.routes);
+          // console.log(res.routes);
+          setLoad(false);
+          // setTests(res.tests);
+          // setStatus(true);
+        });
       }
-    );
+      //  else if (res.status == 403) setStatus(false);
+      else if (res.status == 404) navigation.navigate('404');
+    });
   };
 
   // console.log(data);

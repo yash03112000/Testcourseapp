@@ -18,6 +18,7 @@ import { Circle, G, Line, Text as SVGText } from 'react-native-svg';
 import AutoHeightWebView from 'react-native-autoheight-webview';
 import Constants from 'expo-constants';
 const { server } = require('../config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const { manifest } = Constants;
 
@@ -47,6 +48,7 @@ export default function Result({ route, navigation }) {
   ]);
   const [modal, setModal] = useState(false);
   const [ida, setID] = useState('');
+  const [token, setToken] = useState('');
 
   useEffect(() => {
     initial();
@@ -55,8 +57,14 @@ export default function Result({ route, navigation }) {
 
   const initial = async () => {
     // console.log(id)
+    const token = await AsyncStorage.getItem('token');
+    setToken(token);
     var res = await fetch(`${server}/Testserver/result/${id}`, {
       method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-access-token': token,
+      },
     });
     var data = await res.json();
     var a = data.result;
@@ -70,6 +78,7 @@ export default function Result({ route, navigation }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ testid: id }),
     }).then((res) => {
@@ -171,6 +180,7 @@ export default function Result({ route, navigation }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ testid: id, id: ida, text }),
     }).then((res) => {

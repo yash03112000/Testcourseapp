@@ -39,11 +39,6 @@ import { Provider as StoreProvider } from 'react-redux';
 import { Provider as PaperProvider } from 'react-native-paper';
 import store from './redux/store';
 
-// import { WebView } from 'react-native-webview';
-{
-  /* <WebView originWhitelist={['*']} source={{ html: movie.overview,baseUrl:uri }} scalesPageToFit={false} /> */
-}
-
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();

@@ -25,6 +25,7 @@ import Card from './Card';
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;

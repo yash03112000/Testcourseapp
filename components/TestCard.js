@@ -22,6 +22,7 @@ const { server } = require('./config.js');
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 var confont = 12;
 

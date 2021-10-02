@@ -5,9 +5,10 @@
     "name": "testcourseapp",
     "slug": "testcourseapp",
     "version": "1.0.0",
-    "scheme": "testcourse",
-    "assetBundlePatterns": [
-      "**/*"
-    ]
+    "scheme": "testcourseapp",
+    "assetBundlePatterns": ["**/*"]
+  },
+  "android": {
+    "package": "com.yash.testcoursepp"
   }
 }

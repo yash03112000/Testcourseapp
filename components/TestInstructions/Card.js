@@ -21,6 +21,7 @@ import {
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
 const { manifest } = Constants;
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
@@ -38,6 +39,7 @@ export default function Card({ data, route, navigation }) {
   const [load, setLoad] = useState(true);
   const [status, setStatus] = useState(false);
   const [fresh, setFresh] = useState([]);
+  const [token, setToken] = useState('');
   // const [id, setID] = useState('');
 
   useEffect(() => {
@@ -45,11 +47,14 @@ export default function Card({ data, route, navigation }) {
   }, []);
   const { id } = route.params.params;
 
-  const initial = () => {
+  const initial = async () => {
+    const token = await AsyncStorage.getItem('token');
+    setToken(token);
     fetch(`${server}/CourseServer/test/permit`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id }),
     }).then((res) => {
@@ -83,6 +88,7 @@ export default function Card({ data, route, navigation }) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
       body: JSON.stringify({ id }),
     }).then((res) => {

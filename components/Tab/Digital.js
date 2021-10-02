@@ -18,6 +18,7 @@ import {
   Divider,
 } from 'react-native-paper';
 import DigitalCard from '../DigitalTab/DigitalCard';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
@@ -46,14 +47,18 @@ export default function TestCard({ item: test, navigation }) {
     initial();
   }, []);
 
-  const initial = () => {
+  const initial = async () => {
     // console.log('aa');
     setLoad(true);
-    fetch(`${server}/DashboardServer/user`, { method: 'GET' }).then((res) => {
+    const token = await AsyncStorage.getItem('token');
+    fetch(`${server}/DashboardServer/`, {
+      method: 'GET',
+      headers: { 'x-access-token': token },
+    }).then((res) => {
       if (res.status === 200) {
         res.json().then((res) => {
           // setCourses(res.courses);
-          setTests(res.digitals);
+          setTests(res);
           setStatus(true);
         });
       } else if (res.status == 403) setStatus(false);
@@ -78,8 +83,8 @@ export default function TestCard({ item: test, navigation }) {
         <View
           style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap' }}
         >
-          {tests.map((item, i) => (
-            <DigitalCard {...{ item, navigation }} key={i} />
+          {tests.digitals.map((item, i) => (
+            <DigitalCard type={tests.type} data={item} key={i} />
           ))}
         </View>
       </View>

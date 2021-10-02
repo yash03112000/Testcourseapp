@@ -13,40 +13,50 @@ import Constants from 'expo-constants';
 const { manifest } = Constants;
 import TestCard from './TestCard';
 import { FlatList } from 'react-native-gesture-handler';
+import UserDashboard from '../components/dashboard/userdashboard';
+// import TeacherDashboard from '../components/dashboard/teacherdashboard';
+// import AdminDashboard from '../components/dashboard/admindashboard';
 const width = Dimensions.get('window').width;
 const height = Dimensions.get('window').height;
 const { server } = require('./config.js');
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function Dashboard({ navigation }) {
-  // var server = 'http://localhost:8080'
-  // if (Platform.OS === 'web') {
-  //   server = 'http://localhost:8080';
-  // } else {
-  //   server = `http://${manifest.debuggerHost.split(':').shift()}:8080`;
-  // }
   const [Msg, setMsg] = useState('');
   const [load, setLoad] = useState(true);
-  const [tests, setTests] = useState([]);
+  const [data, setData] = useState({});
 
   useEffect(() => {
     initial();
   }, []);
 
-  const initial = () => {
+  const initial = async () => {
+    const token = await AsyncStorage.getItem('token');
+
     fetch(`${server}/DashboardServer`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
+        'x-access-token': token,
       },
     }).then((res) => {
       // console.log(res.status)
       if (res.status === 200) {
         res.json().then((res) => {
-          setTests(res.tests);
+          // console.log(res);
+          setData(res);
           setLoad(false);
         });
+      } else if (res.status == 403) {
+        navigation.push(`LogIn`);
       }
     });
+  };
+
+  const type = () => {
+    if (data.type == 'User') return <UserDashboard data={data} />;
+    // else if (data.type == 'Teacher') return <TeacherDashboard data={data} />;
+    // else if (data.type == 'Admin') return <AdminDashboard data={data} />;
   };
 
   return load ? (
@@ -59,7 +69,8 @@ export default function Dashboard({ navigation }) {
         {/* <View>
           <Text>Dashboard</Text>
         </View> */}
-        <FlatList
+        {type()}
+        {/* <FlatList
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -71,7 +82,7 @@ export default function Dashboard({ navigation }) {
           data={tests}
           keyExtractor={(item) => item._id}
           renderItem={({ item }) => <TestCard {...{ item, navigation }} />}
-        />
+        /> */}
       </View>
     </View>
   );

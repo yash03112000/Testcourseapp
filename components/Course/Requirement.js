@@ -16,6 +16,7 @@ import {
   Button,
   Divider,
 } from 'react-native-paper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import * as WebBrowser from 'expo-web-browser';
 import Constants from 'expo-constants';
