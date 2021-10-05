@@ -113,7 +113,7 @@ export default function Question({ test }) {
     }
   };
 
-  const initial = () => {
+  const initial = async () => {
     const token = await AsyncStorage.getItem('token');
     setToken(token);
     setLoading(true);

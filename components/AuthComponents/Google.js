@@ -30,7 +30,8 @@ export default function LogIn({ navigation }) {
     expoClientId:
       '79469705024-udvh9a8ep5o31i0rdkj2d1bp6d1mta7c.apps.googleusercontent.com',
     // iosClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
-    // androidClientId: 'GOOGLE_GUID.apps.googleusercontent.com',
+    androidClientId:
+      '1084798383126-u9svc4ettipgp6f41v7jo84nendm9nbf.apps.googleusercontent.com',
     webClientId:
       '79469705024-udvh9a8ep5o31i0rdkj2d1bp6d1mta7c.apps.googleusercontent.com',
   });

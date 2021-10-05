@@ -6,7 +6,12 @@
     "slug": "testcourseapp",
     "version": "1.0.0",
     "scheme": "testcourseapp",
-    "assetBundlePatterns": ["**/*"]
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "android": {
+      "package": "com.yash03112000.testcourseapp"
+    }
   },
   "android": {
     "package": "com.yash.testcoursepp"
